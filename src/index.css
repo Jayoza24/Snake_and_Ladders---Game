@@ -1,1 +1,61 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'logoFont';
+    src: url('/src/assets/fonts/AgentRed.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.font-logo {
+    font-family: 'logoFont', serif;
+}
+
+@font-face {
+    font-family: 'titleFont';
+    src: url('/src/assets/fonts/Organo.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.font-title {
+    font-family: 'titleFont', serif;
+}
+
+@font-face {
+    font-family: 'contentFont';
+    src: url('/src/assets/fonts/Typo_Round_Regular_Demo.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.font-content {
+    font-family: 'contentFont', serif;
+}
+
+
+@keyframes pawn-bounce {
+    0% {
+        transform: scale(1) translateY(0);
+    }
+
+    30% {
+        transform: scale(1.2) translateY(-20%);
+    }
+
+    50% {
+        transform: scale(0.95) translateY(0);
+    }
+
+    70% {
+        transform: scale(1.05) translateY(-10%);
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+.pawn-bounce {
+    animation: pawn-bounce 0.5s;
+}

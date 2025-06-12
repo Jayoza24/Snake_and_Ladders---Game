@@ -1,0 +1,127 @@
+.dice-container {
+  perspective: 800px;
+  width: 80px;
+  height: 80px;
+}
+
+.dice {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.face {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot-layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.dot-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot-top-left {
+  top: 20%;
+  left: 20%;
+}
+
+.dot-top-right {
+  top: 20%;
+  right: 20%;
+}
+
+.dot-bottom-left {
+  bottom: 20%;
+  left: 20%;
+}
+
+.dot-bottom-right {
+  bottom: 20%;
+  right: 20%;
+}
+
+.dot-mid-left {
+  top: 50%;
+  left: 20%;
+  transform: translateY(-50%);
+}
+
+.dot-mid-right {
+  top: 50%;
+  right: 20%;
+  transform: translateY(-50%);
+}
+
+/* Position each face */
+.face-1 {
+  transform: rotateY(0deg) translateZ(40px);
+}
+
+.face-2 {
+  transform: rotateX(-90deg) translateZ(40px);
+}
+
+.face-3 {
+  transform: rotateY(90deg) translateZ(40px);
+}
+
+.face-4 {
+  transform: rotateY(-90deg) translateZ(40px);
+}
+
+.face-5 {
+  transform: rotateX(90deg) translateZ(40px);
+}
+
+.face-6 {
+  transform: rotateY(180deg) translateZ(40px);
+}
+
+/* Show correct face */
+.show-1 .dice {
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
+.show-2 .dice {
+  transform: rotateX(90deg);
+}
+
+.show-3 .dice {
+  transform: rotateY(-90deg);
+}
+
+.show-4 .dice {
+  transform: rotateY(90deg);
+}
+
+.show-5 .dice {
+  transform: rotateX(-90deg);
+}
+
+.show-6 .dice {
+  transform: rotateY(180deg);
+}
