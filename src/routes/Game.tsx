@@ -6,7 +6,11 @@ import WinModal from "../components/WinModal";
 import { useGame } from "../context/GameContext";
 import BackModal from "../components/BackModal";
 import { useEffect, useState } from "react";
-import { clearStorage } from "../utils/storage";
+import { clearStorage, saveToStorage } from "../utils/storage";
+import {
+  generateBoardData,
+  generateSnakesAndLadders,
+} from "../utils/boardGenerator";
 
 interface Player {
   id: string | number;
@@ -37,9 +41,17 @@ const Game: React.FC = () => {
     setIsOpen(false);
     clearStorage("game_cells");
     clearStorage("game_entities");
-    clearStorage("game_players");
-    clearStorage("player_turn");
+
+    const boardData = generateBoardData();
+    const snakesAndLadders = generateSnakesAndLadders();
+
+    saveToStorage("game_cells", boardData);
+    saveToStorage("game_entities", snakesAndLadders);
+    saveToStorage("game_players", players);
+    saveToStorage("player_turn", 0);
+
     navigate("/game", { state: { players } });
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -53,7 +65,7 @@ const Game: React.FC = () => {
         },
       });
     }
-  }, [location.state]);
+  }, [dispatch, location.state]);
 
   return (
     <div className="min-h-screen w-full flex flex-col landscape:flex-row md:flex-row relative">
@@ -115,6 +127,7 @@ const Game: React.FC = () => {
       <WinModal />
       <BackModal
         isOpen={isOpen}
+        setClose={() => setIsOpen(false)}
         onBackToMenu={handleBackToMain}
         onRestart={handleRestart}
       />

@@ -5,3 +5,8 @@ export interface SnakeOrLadder {
   end: number;
   type: EntityType;
 }
+
+export type CellData = {
+  number: number;
+  color: string;
+};

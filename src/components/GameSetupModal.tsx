@@ -1,21 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import { clearStorage, saveToStorage } from "../utils/storage";
-import { generateSnakesAndLadders } from "../utils/boardGenerator";
+import { generateBoardData, generateSnakesAndLadders } from "../utils/boardGenerator";
 
 const PLAYER_COLORS = ["#e74c3c", "#27ae60", "#2980b9", "#f1c40f", "#8e44ad"];
-const CELL_COLORS = [
-  "bg-[#D7263D]",
-  "bg-[#F46036]",
-  "bg-[#FFD23F]",
-  "bg-[#247BA0]",
-  "bg-[#6A4C93]",
-];
-
-type CellData = {
-  number: number;
-  color: string;
-};
 
 type Player = {
   id: number;
@@ -54,22 +42,6 @@ const GameSetupModal: React.FC<Props> = ({ onClose, onStart }) => {
     const updated = [...playerNames];
     updated[index] = value;
     setPlayerNames(updated);
-  };
-
-  const generateBoardData = (): CellData[] => {
-    const rows: CellData[][] = [];
-    for (let i = 9; i >= 0; i--) {
-      const row: CellData[] = [];
-      for (let j = 0; j < 10; j++) {
-        const num = i * 10 + j + 1;
-        const color =
-          CELL_COLORS[Math.floor(Math.random() * CELL_COLORS.length)];
-        row.push({ number: num, color });
-      }
-      if (i % 2 === 1) row.reverse();
-      rows.push(row);
-    }
-    return rows.flat();
   };
 
   const handleStart = () => {

@@ -43,14 +43,27 @@ const GameContext = createContext<{
 
 function gameReducer(state: GameState, action: any): GameState {
   switch (action.type) {
-    case "INIT_GAME":
+    case "INIT_GAME": {
+      const storedTurn = parseInt(getFromStorage("player_turn", "0"));
       return {
         ...state,
         players: action.payload.players,
-        currentPlayerIndex: 0,
+        currentPlayerIndex: isNaN(storedTurn) ? 0 : storedTurn,
+        entities: action.payload.snakesAndLadders || [],
         diceRoll: null,
-        entities: getFromStorage("game_entities", []),
+        winner: null,
       };
+    }
+
+    case "NEXT_TURN": {
+      const nextIndex = (state.currentPlayerIndex + 1) % state.players.length;
+      saveToStorage("player_turn", JSON.stringify(nextIndex));
+      return {
+        ...state,
+        currentPlayerIndex: nextIndex,
+        diceRoll: null,
+      };
+    }
 
     case "ROLL_DICE":
       saveToStorage("player_turn", state.currentPlayerIndex);
@@ -90,6 +103,10 @@ function gameReducer(state: GameState, action: any): GameState {
       }
 
       saveToStorage("game_players", updatedPlayers);
+      saveToStorage(
+        "player_turn",
+        (state.currentPlayerIndex + 1) % state.players.length
+      );
 
       return {
         ...state,
@@ -112,9 +129,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const players = getFromStorage<Player[]>("game_players", []);
-    const entities = getFromStorage<SnakeOrLadder[]>("game_entities", []);
+    const turn = getFromStorage<number>("player_turn", 0);
     if (players.length > 0) {
-      dispatch({ type: "INIT_GAME", payload: { players, entities } });
+      dispatch({
+        type: "INIT_GAME",
+        payload: {
+          players,
+          boardData: getFromStorage("game_cells", []),
+          snakesAndLadders: getFromStorage("game_entities", []),
+          currentPlayerIndex: turn,
+        },
+      });
     }
   }, []);
 

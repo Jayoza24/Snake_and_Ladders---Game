@@ -46,42 +46,99 @@ const GameBoard: React.FC = () => {
         {entities.map((entity, index) => {
           const start = getCellPositionPercent(entity.start);
           const end = getCellPositionPercent(entity.end);
-          const x1 = start.x + 5; // center of cell (cell is 10x10)
+          const x1 = start.x + 5;
           const y1 = start.y + 5;
           const x2 = end.x + 5;
           const y2 = end.y + 5;
 
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          const length = Math.sqrt(dx * dx + dy * dy);
+
           if (entity.type === "snake") {
-            const midX = (x1 + x2) / 2;
-            const midY = (y1 + y2) / 2;
-            const controlOffset = 15; // adjust for curve, in percent units
-            const pathData = `M ${x1} ${y1} Q ${midX - controlOffset} ${
-              midY - controlOffset
-            }, ${x2} ${y2}`;
             return (
-              <path
+              <image
                 key={index}
-                d={pathData}
-                fill="none"
-                stroke="red"
-                opacity={0.8}
-                strokeWidth="1.5"
-                strokeLinecap="round"
+                href={`/snake${index % 2}.png`}
+                x={x1}
+                y={y1}
+                width={length}
+                height={5}
+                transform={`rotate(${angle}, ${x1}, ${y1})`}
+                preserveAspectRatio="none"
               />
             );
           } else {
+            // Draw a "ladder" as two parallel lines with rungs between them
+            const ladderWidth = 3; // width of ladder in percent units
+            // Calculate unit vector perpendicular to the ladder direction
+            const perpDx = -(y2 - y1);
+            const perpDy = x2 - x1;
+            const perpLen = Math.sqrt(perpDx * perpDx + perpDy * perpDy);
+            const offsetX = (perpDx / perpLen) * (ladderWidth / 2);
+            const offsetY = (perpDy / perpLen) * (ladderWidth / 2);
+
+            // Points for the two rails
+            const rail1Start = { x: x1 + offsetX, y: y1 + offsetY };
+            const rail1End = { x: x2 + offsetX, y: y2 + offsetY };
+            const rail2Start = { x: x1 - offsetX, y: y1 - offsetY };
+            const rail2End = { x: x2 - offsetX, y: y2 - offsetY };
+
+            // Rungs
+            const rungCount = Math.max(3, Math.floor(length / 10));
+            const rungs = [];
+            for (let i = 1; i < rungCount; i++) {
+              const t = i / rungCount;
+              const rungStart = {
+                x: rail1Start.x + (rail1End.x - rail1Start.x) * t,
+                y: rail1Start.y + (rail1End.y - rail1Start.y) * t,
+              };
+              const rungEnd = {
+                x: rail2Start.x + (rail2End.x - rail2Start.x) * t,
+                y: rail2Start.y + (rail2End.y - rail2Start.y) * t,
+              };
+              rungs.push(
+                <line
+                  key={`rung-${index}-${i}`}
+                  x1={rungStart.x}
+                  y1={rungStart.y}
+                  x2={rungEnd.x}
+                  y2={rungEnd.y}
+                  stroke="#0f0f0f"
+                  opacity={0.5}
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                />
+              );
+            }
+
             return (
-              <line
-                key={index}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="green"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeDasharray="2 1.5"
-              />
+              <g key={index}>
+                {/* Rails */}
+                <line
+                  x1={rail1Start.x}
+                  y1={rail1Start.y}
+                  x2={rail1End.x}
+                  y2={rail1End.y}
+                  stroke="#bfa14a"
+                  strokeWidth="1"
+                  opacity={0.8}
+                  strokeLinecap="round"
+                />
+                <line
+                  x1={rail2Start.x}
+                  y1={rail2Start.y}
+                  x2={rail2End.x}
+                  y2={rail2End.y}
+                  stroke="#bfa14a"
+                  strokeWidth="1"
+                  opacity={0.8}
+                  strokeLinecap="round"
+                />
+                {/* Rungs */}
+                {rungs}
+              </g>
             );
           }
         })}
