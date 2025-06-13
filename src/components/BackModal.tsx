@@ -45,7 +45,7 @@ const BackModal: React.FC<BackModalProps> = ({
             Restart Game
           </button>
           <button
-            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#fdfcfb] to-[#e2d1c3] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
             onClick={onBackToMenu}
           >
             Back to Main Menu

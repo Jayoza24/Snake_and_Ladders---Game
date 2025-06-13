@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import { getFromStorage, saveToStorage } from "../utils/storage";
@@ -76,7 +77,6 @@ function gameReducer(state: GameState, action: any): GameState {
       if (!currentPawn) return state;
 
       let newPos = currentPawn.position + (state.diceRoll || 0);
-
       if (newPos > 100) newPos = 100;
 
       const entity = state.entities.find((e) => e.start === newPos);
@@ -114,6 +114,16 @@ function gameReducer(state: GameState, action: any): GameState {
         diceRoll: null,
         currentPlayerIndex:
           (state.currentPlayerIndex + 1) % state.players.length,
+      };
+    }
+
+    case "RESET_GAME": {
+      return {
+        ...state,
+        players: action.payload.players,
+        winner: null,
+        diceRoll: null,
+        currentPlayerIndex: 0,
       };
     }
 

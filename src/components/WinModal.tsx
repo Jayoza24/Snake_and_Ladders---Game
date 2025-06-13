@@ -1,33 +1,44 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
-import { clearStorage } from "../utils/storage";
+import { clearStorage, saveToStorage } from "../utils/storage";
 
 const WinModal: React.FC = () => {
-  const { state } = useGame();
+  const { state, dispatch } = useGame();
   const navigate = useNavigate();
 
   if (!state.winner) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="p-8 rounded-lg shadow-lg text-center bg-white/20 border border-white/30 backdrop-blur-md drop-shadow-lg">
+      <div className="p-8 rounded-lg shadow-lg text-center bg-white/20 border border-white/30 backdrop-blur-sm drop-shadow-lg">
         <h2 className="font-content tracking-widest text-2xl font-bold mb-4 text-white">
           🎉 {state.winner.name} Wins!
         </h2>
 
         <div className="flex flex-col gap-3 mt-4">
           <button
-            className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-black px-4 py-2 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 cursor-pointer rounded-full transition-all duration-200"
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
             onClick={() => {
-              navigate("/game", { replace: true });
-              window.location.reload();
+              const resetPlayers = state.players.map((player) => ({
+                ...player,
+                pawns: player.pawns.map((pawn) => ({ ...pawn, position: 0 })),
+              }));
+
+              clearStorage("player_turn");
+              saveToStorage("game_players", resetPlayers);
+              saveToStorage("game_entities", state.entities);
+
+              dispatch({
+                type: "RESET_GAME",
+                payload: { players: resetPlayers },
+              });
             }}
           >
             Replay Game
           </button>
           <button
-            className="bg-gradient-to-r from-white via-gray-100 to-gray-300 text-black px-4 py-2 hover:from-gray-100 hover:via-gray-200 hover:to-gray-400 cursor-pointer rounded-full transition-all duration-200"
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#fdfcfb] to-[#e2d1c3] bg-[length:200%_200%] bg-left hover:bg-righ hover:scale-105"
             onClick={() => {
               clearStorage("game_cells");
               clearStorage("game_entities");

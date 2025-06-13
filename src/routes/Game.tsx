@@ -6,7 +6,7 @@ import WinModal from "../components/WinModal";
 import { useGame } from "../context/GameContext";
 import BackModal from "../components/BackModal";
 import { useEffect, useState } from "react";
-import { clearStorage, saveToStorage } from "../utils/storage";
+import { clearStorage, getFromStorage, saveToStorage } from "../utils/storage";
 import {
   generateBoardData,
   generateSnakesAndLadders,
@@ -26,7 +26,8 @@ const Game: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const players: Player[] = location.state?.players || [];
+  const players: Player[] =
+    location.state?.players || getFromStorage("game_players", []);
 
   const handleBackToMain = () => {
     setIsOpen(false);

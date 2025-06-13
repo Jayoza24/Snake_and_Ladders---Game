@@ -93,9 +93,14 @@ const PawnOverlay: React.FC = () => {
           }
 
           return pawns.map((pawn, idx) => {
+            const dice = state.diceRoll ?? 0;
+            const canMove = pawn.position + dice <= 100;
+
             const isActive =
               pawn.playerIndex === state.currentPlayerIndex &&
-              typeof state.diceRoll === "number";
+              typeof state.diceRoll === "number" &&
+              canMove;
+
             return (
               <div
                 key={pawn.id}
@@ -119,8 +124,8 @@ const PawnOverlay: React.FC = () => {
                 title={`${pawn.player.name}'s pawn`}
                 onClick={() => {
                   if (isActive) {
-                    const diceRollAudio = new Audio("/pawn_movement.mp3");
-                    diceRollAudio.play();
+                    const movementSound = new Audio("/pawn_movement.mp3");
+                    movementSound.play();
                     dispatch({
                       type: "MOVE_PAWN",
                       payload: { pawnId: pawn.id },
@@ -143,9 +148,14 @@ const PawnOverlay: React.FC = () => {
             {player.pawns
               .filter((pawn) => pawn.position === 0)
               .map((pawn) => {
+                const dice = state.diceRoll ?? 0;
+                const canMove = pawn.position + dice <= 100;
+
                 const isActive =
                   playerIndex === state.currentPlayerIndex &&
-                  typeof state.diceRoll === "number";
+                  typeof state.diceRoll === "number" &&
+                  canMove;
+
                 return (
                   <div
                     key={pawn.id}
@@ -163,6 +173,8 @@ const PawnOverlay: React.FC = () => {
                     title={`${player.name}'s pawn`}
                     onClick={() => {
                       if (isActive) {
+                        const movementSound = new Audio("/pawn_movement.mp3");
+                        movementSound.play();
                         dispatch({
                           type: "MOVE_PAWN",
                           payload: { pawnId: pawn.id },
