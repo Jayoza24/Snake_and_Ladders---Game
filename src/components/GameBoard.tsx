@@ -26,7 +26,7 @@ const GameBoard: React.FC = () => {
   return (
     <div className="relative w-full aspect-square">
       {/* Grid Layer */}
-      <div className="absolute inset-0 grid grid-cols-10 grid-rows-10 gap-1 bg-amber-950 border-amber-950 border-8 rounded-xl shadow-2xl shadow-amber-950 z-0">
+      <div className="absolute inset-0 grid grid-cols-10 grid-rows-10 gap-1 bg-amber-950 border-amber-950 border-8 rounded-xl shadow-2xl shadow-amber-950 z-0 select-none">
         {cells.map((cell) => (
           <div
             key={cell.number}

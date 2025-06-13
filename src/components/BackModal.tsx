@@ -37,18 +37,20 @@ const BackModal: React.FC<BackModalProps> = ({
         <h2 className="font-content tracking-widest text-2xl font-bold mb-6 text-white drop-shadow">
           Game Paused
         </h2>
-        <button
-          className="bg-blue-600 font-content hover:bg-blue-700 text-white py-3 px-6 rounded mr-2 mt-2 transition"
-          onClick={onRestart}
-        >
-          Restart Game
-        </button>
-        <button
-          className="bg-blue-600 font-content hover:bg-blue-700 text-white py-3 px-6 rounded ml-2 mt-2 transition"
-          onClick={onBackToMenu}
-        >
-          Back to Main Menu
-        </button>
+        <div className="flex flex-col gap-4">
+          <button
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
+            onClick={onRestart}
+          >
+            Restart Game
+          </button>
+          <button
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
+            onClick={onBackToMenu}
+          >
+            Back to Main Menu
+          </button>
+        </div>
       </div>
     </div>
   );

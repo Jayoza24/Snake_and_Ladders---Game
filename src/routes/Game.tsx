@@ -68,7 +68,7 @@ const Game: React.FC = () => {
   }, [dispatch, location.state]);
 
   return (
-    <div className="min-h-screen w-full flex flex-col landscape:flex-row md:flex-row relative">
+    <div className="min-h-screen w-full flex flex-col landscape:flex-row md:flex-row relative overflow-hidden">
       <img
         src="/wooden_bg.jpg"
         alt="bg-image"
@@ -82,44 +82,46 @@ const Game: React.FC = () => {
         <span className="font-content text-white">{"<"}</span>
       </div>
 
-      {/* Board Panel */}
-      <div className="w-full md:w-3/5 flex items-center justify-center p-4 relative z-10">
-        <div className="w-full max-w-[90vmin] aspect-square">
-          <GameBoard />
+      <div className="flex flex-col gap-12 md:flex-row w-full h-full">
+        {/* Board Panel */}
+        <div className="w-full md:w-3/5 flex items-center justify-center p-4 relative z-10">
+          <div className="w-full max-w-[90vmin] aspect-square">
+            <GameBoard />
+          </div>
         </div>
-      </div>
 
-      {/* Info Panel */}
-      <div className="max-w-full min-w-fit flex items-center justify-center p-10 relative z-10">
-        <div
-          className="w-full max-w-md h-full rounded-xl bg-white/10 backdrop-blur-md text-white shadow-lg border border-white/30 px-8 py-4 flex flex-col"
-          style={{
-            boxShadow: "0 2px 15px 0 rgba(0, 0, 0, 0.7)",
-            border: "1px solid rgba(255, 255, 255, 0.18)",
-          }}
-        >
-          <h2 className="text-xl font-bold mb-4 text-center">Players</h2>
-          <ul className="space-y-4 mb-6">
-            {players.map((player, index) => (
-              <li
-                key={player.id}
-                className={`flex items-center gap-2 rounded-4xl px-2 py-2 cursor-pointer transition-all duration-1000 ${
-                  state.currentPlayerIndex === index
-                    ? "bg-amber-950 scale-110"
-                    : "bg-white/30"
-                }`}
-              >
-                <span
-                  className="w-6 h-6 rounded-full border-2 border-black"
-                  style={{ backgroundColor: player.color }}
-                ></span>
-                {player.name}
-              </li>
-            ))}
-          </ul>
+        {/* Info Panel */}
+        <div className="max-w-full min-w-fit flex items-center justify-center p-10 relative z-10 select-none">
+          <div
+            className="w-full max-w-md h-full rounded-xl bg-white/10 backdrop-blur-md text-white shadow-lg border border-white/30 px-8 py-4 flex flex-col"
+            style={{
+              boxShadow: "0 2px 15px 0 rgba(0, 0, 0, 0.7)",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+            }}
+          >
+            <h2 className="text-xl font-bold mb-4 text-center">Players</h2>
+            <ul className="space-y-4 mb-6">
+              {players.map((player, index) => (
+                <li
+                  key={player.id}
+                  className={`flex items-center gap-2 rounded-4xl px-2 py-2 cursor-pointer transition-all duration-1000 ${
+                    state.currentPlayerIndex === index
+                      ? "bg-amber-950 scale-110"
+                      : "bg-white/30"
+                  }`}
+                >
+                  <span
+                    className="w-6 h-6 rounded-full border-2 border-black"
+                    style={{ backgroundColor: player.color }}
+                  ></span>
+                  {player.name}
+                </li>
+              ))}
+            </ul>
 
-          <div className="flex justify-center mt-auto">
-            <Dice />
+            <div className="flex justify-center mt-auto">
+              <Dice />
+            </div>
           </div>
         </div>
       </div>

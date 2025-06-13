@@ -119,6 +119,8 @@ const PawnOverlay: React.FC = () => {
                 title={`${pawn.player.name}'s pawn`}
                 onClick={() => {
                   if (isActive) {
+                    const diceRollAudio = new Audio("/pawn_movement.mp3");
+                    diceRollAudio.play();
                     dispatch({
                       type: "MOVE_PAWN",
                       payload: { pawnId: pawn.id },
@@ -133,46 +135,45 @@ const PawnOverlay: React.FC = () => {
 
       {/* Off-board pawns (position === 0) */}
       <div
-        className="absolute left-0 right-0"
-        style={{ top: "2%", left: "-15%" }}
+        className="flex flex-wrap justify-center absolute bottom-[-25%] md:flex-col md:absolute w-full md:w-auto gap-4
+             md:top-[2%] md:left-[-15%] mt-4 md:mt-0"
       >
-        <div className="flex gap-6 flex-wrap w-10">
-          {state.players.map((player, playerIndex) => (
-            <div key={player.id} className="flex gap-2 items-center">
-              {player.pawns
-                .filter((pawn) => pawn.position === 0)
-                .map((pawn) => {
-                  const isActive =
-                    playerIndex === state.currentPlayerIndex &&
-                    typeof state.diceRoll === "number";
-                  return (
-                    <div
-                      key={pawn.id}
-                      className={`rounded-full border-black border-2 transition-all duration-500 z-50 ${
-                        isActive &&
-                        "cursor-pointer ring-2 ring-yellow-400 ring-offset-2 ring-offset-black"
-                      }`}
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        backgroundColor: player.color,
-                        pointerEvents: isActive ? "auto" : "none",
-                      }}
-                      title={`${player.name}'s pawn`}
-                      onClick={() => {
-                        if (isActive) {
-                          dispatch({
-                            type: "MOVE_PAWN",
-                            payload: { pawnId: pawn.id },
-                          });
-                        }
-                      }}
-                    ></div>
-                  );
-                })}
-            </div>
-          ))}
-        </div>
+        {state.players.map((player, playerIndex) => (
+          <div key={player.id} className="flex gap-2 items-center">
+            {player.pawns
+              .filter((pawn) => pawn.position === 0)
+              .map((pawn) => {
+                const isActive =
+                  playerIndex === state.currentPlayerIndex &&
+                  typeof state.diceRoll === "number";
+                return (
+                  <div
+                    key={pawn.id}
+                    className={`rounded-full border-black border-2 transition-all duration-500 z-50 ${
+                      isActive
+                        ? "cursor-pointer ring-2 ring-yellow-400 ring-offset-2 ring-offset-black"
+                        : "opacity-70"
+                    }`}
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      backgroundColor: player.color,
+                      pointerEvents: isActive ? "auto" : "none",
+                    }}
+                    title={`${player.name}'s pawn`}
+                    onClick={() => {
+                      if (isActive) {
+                        dispatch({
+                          type: "MOVE_PAWN",
+                          payload: { pawnId: pawn.id },
+                        });
+                      }
+                    }}
+                  ></div>
+                );
+              })}
+          </div>
+        ))}
       </div>
     </>
   );

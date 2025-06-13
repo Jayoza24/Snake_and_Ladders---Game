@@ -16,7 +16,7 @@ const Dice: React.FC = () => {
     setRolling(true);
     setFace(rolled);
     diceRollAudio.play();
-    if (navigator.vibrate) navigator.vibrate(100);
+    if (navigator.vibrate) navigator.vibrate(300);
 
     setTimeout(() => {
       dispatch({ type: "ROLL_DICE", payload: rolled });
@@ -47,13 +47,13 @@ const Dice: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
-      <div className="text-lg font-semibold text-gray-800">
+      <div className="font-content tracking-widest text-lg font-semibold text-black">
         🎯 {currentPlayer?.name}'s Turn
       </div>
 
       <div className={`dice-container show-${face}`}>
         <div
-          className="dice"
+          className="dice cursor-pointer"
           onClick={rollDice}
           role="button"
           aria-label="Roll Dice"
@@ -72,7 +72,7 @@ const Dice: React.FC = () => {
 
       <button
         onClick={rollDice}
-        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
         disabled={state.diceRoll !== null || rolling}
       >
         Roll Dice 🎲

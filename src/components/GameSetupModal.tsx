@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import { clearStorage, saveToStorage } from "../utils/storage";
-import { generateBoardData, generateSnakesAndLadders } from "../utils/boardGenerator";
+import {
+  generateBoardData,
+  generateSnakesAndLadders,
+} from "../utils/boardGenerator";
 
 const PLAYER_COLORS = ["#e74c3c", "#27ae60", "#2980b9", "#f1c40f", "#8e44ad"];
 
@@ -142,7 +145,7 @@ const GameSetupModal: React.FC<Props> = ({ onClose, onStart }) => {
           </button>
           <button
             onClick={handleStart}
-            className="bg-gradient-to-r from-[#ed2b9f] to-[#ffe13a] text-black font-semibold px-4 py-2 rounded-full hover:scale-105 transition"
+            className="font-content text-base text-black cursor-pointer tracking-widest font-bold py-2 px-4 rounded-full shadow-lg transition-all drop-shadow-2xl duration-500 bg-gradient-to-r from-[#ffca3a] to-[#ff595e] bg-[length:200%_200%] bg-left hover:bg-right hover:text-white hover:scale-105"
           >
             Start Game
           </button>
