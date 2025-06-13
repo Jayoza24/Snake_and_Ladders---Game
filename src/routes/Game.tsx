@@ -62,7 +62,7 @@ const Game: React.FC = () => {
         payload: {
           players: location.state.players,
           boardData: location.state.boardData,
-          snakesAndLadders: location.state.snakesAndLadders,
+          snakesAndLadders: location.state.entities,
         },
       });
     }

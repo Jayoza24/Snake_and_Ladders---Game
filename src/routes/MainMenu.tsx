@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react";
 import { useNavigate } from "react-router-dom";
 import GameSetupModal from "../components/GameSetupModal";
@@ -8,8 +9,18 @@ const MainMenu: React.FC = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleStartGame = (players: { name: string; id: number }[]) => {
-    navigate("/game", { state: { players } });
+  const handleStartGame = (
+    players: { name: string; id: number }[],
+    boardData: any[],
+    snakesAndLadders: any[]
+  ) => {
+    navigate("/game", {
+      state: {
+        players,
+        boardData,
+        entities: snakesAndLadders,
+      },
+    });
   };
 
   return (
@@ -37,9 +48,9 @@ const MainMenu: React.FC = () => {
       {showModal && (
         <GameSetupModal
           onClose={() => setShowModal(false)}
-          onStart={(players) => {
+          onStart={(players, boardData, snakesAndLadders) => {
             setShowModal(false);
-            handleStartGame(players);
+            handleStartGame(players, boardData, snakesAndLadders);
           }}
         />
       )}

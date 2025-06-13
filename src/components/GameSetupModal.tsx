@@ -17,7 +17,11 @@ type Player = {
 
 type Props = {
   onClose: () => void;
-  onStart: (players: Player[]) => void;
+  onStart: (
+    players: Player[],
+    boardData: { number: number; color: string }[],
+    snakesAndLadders: { type: "snake" | "ladder"; start: number; end: number }[]
+  ) => void;
 };
 
 const GameSetupModal: React.FC<Props> = ({ onClose, onStart }) => {
@@ -69,7 +73,7 @@ const GameSetupModal: React.FC<Props> = ({ onClose, onStart }) => {
     saveToStorage("game_entities", snakesAndLadders);
     saveToStorage("game_players", players);
 
-    onStart(players);
+    onStart(players, boardData, snakesAndLadders);
   };
 
   return (
