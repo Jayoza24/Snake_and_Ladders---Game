@@ -83,7 +83,7 @@ const Game: React.FC = () => {
         <span className="font-content text-white">{"<"}</span>
       </div>
 
-      <div className="flex flex-col gap-12 md:flex-row w-full h-full">
+      <div className="flex flex-col gap-12 md:flex-col md:items-center lg:flex-row w-full h-full">
         {/* Board Panel */}
         <div className="w-full md:w-3/5 flex items-center justify-center p-4 relative z-10">
           <div className="w-full max-w-[90vmin] aspect-square">
